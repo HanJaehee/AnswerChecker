@@ -99,6 +99,9 @@ div#container {
 																			+ answer.answers[2]
 																			+ "</td>";
 																	html += "<td>"
+																			+ answer.answers[3]
+																			+ "</td>";
+																	html += "<td>"
 																			+ answer.matched
 																			+ "</td></tr>"
 
@@ -165,6 +168,7 @@ div#container {
 					<th scope="col">재희</th>
 					<th scope="col">홍균</th>
 					<th scope="col">지환</th>
+					<th scope="col">유창</th>
 					<th scope="col">일치</th>
 
 				</tr>

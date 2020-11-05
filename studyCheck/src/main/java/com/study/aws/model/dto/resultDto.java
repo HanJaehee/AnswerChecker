@@ -3,7 +3,7 @@ package com.study.aws.model.dto;
 public class resultDto {
 
 	private String answerNum;
-	private String[] answers; // 1 - 재희, 2 - 홍균, 3 - 지환
+	private String[] answers; // 1 - 재희, 2 - 홍균, 3 - 지환, 4- 유
 	private String matched;
 
 	public resultDto() {

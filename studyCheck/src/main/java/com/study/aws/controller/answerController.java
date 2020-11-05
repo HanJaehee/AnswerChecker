@@ -45,7 +45,7 @@ public class answerController {
 	public ModelAndView login(@RequestParam HashMap<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
 		String name = map.get("name");
 		ModelAndView mv = new ModelAndView();
-		if(name.equals("재희") || name.equals("홍균") || name.equals("지환")) {
+		if(name.equals("재희") || name.equals("홍균") || name.equals("지환") || name.equals("유창")) {
 			session.setAttribute("name", name);
 			
 //			Cookie cookie = new Cookie("name", name);
@@ -80,12 +80,12 @@ public class answerController {
 		int end = Integer.parseInt(domain.getEndNum());
 		List<resultDto> list = new ArrayList<resultDto>();
 		
-		String han, hong, choi;
+		String han, hong, choi, you;
 		answerDto tmp;
 		for(int i=start; i<=end; i++) {
 			resultDto r = new resultDto();
 			r.setAnswerNum(Integer.toString(i));
-			han = ""; hong = ""; choi = "";
+			han = ""; hong = ""; choi = ""; you="";
 			for(int j=0; j<result.size(); j++) {
 				tmp = result.get(j);
 				if(i == tmp.getAnswerNum()) {
@@ -93,15 +93,17 @@ public class answerController {
 						han = tmp.getAnswer();
 					else if(tmp.getName().equals("홍균"))
 						hong = tmp.getAnswer();
+					else if(tmp.getName().equals("유창"))
+						you = tmp.getAnswer();
 					else
 						choi = tmp.getAnswer();
 				}
 			}
-			r.setAnswers(new String[]{han, hong, choi});
+			r.setAnswers(new String[]{han, hong, choi, you});
 			
-			if(han.equals("") || hong.equals("") || choi.equals(""))
+			if(han.equals("") || hong.equals("") || choi.equals("") || you.equals(""))
 				r.setMatched("");
-			else if(han.equals(hong) && hong.equals(choi))
+			else if(han.equals(hong) && hong.equals(choi) && choi.equals(you))
 				r.setMatched("O");
 			else
 				r.setMatched("X");

@@ -67,7 +67,7 @@ h1, P, input, button, div {
 	<c:if test="${ null eq name }">
 	<div>
 		<h1>Hello world!</h1>
-		<br /> <br /> 이름을 입력하세요 !<br />ex) 재희 , 홍균, 지환<br /> <br />
+		<br /> <br /> 이름을 입력하세요 !<br />ex) 재희 , 홍균, 지환, 유창<br /> <br />
 		<form id="loginForm" method="post">
 			<input type="text" id="name" name="name"/><br /> <br />
 			<button class="btn btn-light" id="connect">접속</button>

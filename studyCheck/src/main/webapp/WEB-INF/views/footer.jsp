@@ -4,10 +4,10 @@
 
 <p style="text-align : center">
 	<button>
-		<a href="${root}list">답 모음</a>
+		<a href="${root}list">답 모음 페이지</a>
 	</button>
 	<button>
-		<a href="${root}answer/regist">답 등록</a>
+		<a href="${root}answer/regist">답 등록 페이지</a>
 	</button>
 	<button>
 		<a href="${root}answer/logout">로그아웃</a>
