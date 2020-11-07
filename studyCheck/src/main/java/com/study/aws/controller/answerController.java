@@ -32,7 +32,7 @@ import com.study.aws.model.service.answerService;
 @Controller
 @RequestMapping("/answer")
 public class answerController {
-	
+
 	@Autowired
 	private answerService ser;
 
@@ -40,70 +40,75 @@ public class answerController {
 	public String login() {
 		return "home";
 	}
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ModelAndView login(@RequestParam HashMap<String, String> map, Model model, HttpSession session, HttpServletResponse response) {
+	public ModelAndView login(@RequestParam HashMap<String, String> map, Model model, HttpSession session,
+			HttpServletResponse response) {
 		String name = map.get("name");
 		ModelAndView mv = new ModelAndView();
-		if(name.equals("재희") || name.equals("홍균") || name.equals("지환") || name.equals("유창")) {
+		if (name.equals("재희") || name.equals("홍균") || name.equals("지환") || name.equals("유창")) {
 			session.setAttribute("name", name);
-			
+
 //			Cookie cookie = new Cookie("name", name);
 //			cookie.setPath("/");
 //			response.addCookie(cookie);
-			
+
 			System.out.println(name);
 //			mv.addObject("name", name);
 			mv.setViewName("home");
-			
-		}else {
+
+		} else {
 			model.addAttribute("msg", "이름이 잘못됨");
 			mv.setViewName("home");
 		}
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.POST, headers = { "Content-type=application/json" })
-	public @ResponseBody List<resultDto> list(@RequestBody domainDto domain, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody List<resultDto> list(@RequestBody domainDto domain, HttpServletRequest request,
+			HttpSession session) {
 		System.out.println(domain.toString());
 		try {
-			List<answerDto> result= ser.selectAll(domain);
+			List<answerDto> result = ser.selectAll(domain);
 			return ListToResult(result, domain);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
-	
+
 	private List<resultDto> ListToResult(List<answerDto> result, domainDto domain) {
 		int start = Integer.parseInt(domain.getStartNum());
 		int end = Integer.parseInt(domain.getEndNum());
 		List<resultDto> list = new ArrayList<resultDto>();
-		
+
 		String han, hong, choi, you;
 		answerDto tmp;
-		for(int i=start; i<=end; i++) {
+		for (int i = start; i <= end; i++) {
 			resultDto r = new resultDto();
 			r.setAnswerNum(Integer.toString(i));
-			han = ""; hong = ""; choi = ""; you="";
-			for(int j=0; j<result.size(); j++) {
+			han = "";
+			hong = "";
+			choi = "";
+			you = "";
+			for (int j = 0; j < result.size(); j++) {
 				tmp = result.get(j);
-				if(i == tmp.getAnswerNum()) {
-					if(tmp.getName().equals("재희"))
+				if (i == tmp.getAnswerNum()) {
+					if (tmp.getName().equals("재희"))
 						han = tmp.getAnswer();
-					else if(tmp.getName().equals("홍균"))
+					else if (tmp.getName().equals("홍균"))
 						hong = tmp.getAnswer();
-					else if(tmp.getName().equals("유창"))
+					else if (tmp.getName().equals("유창"))
 						you = tmp.getAnswer();
 					else
 						choi = tmp.getAnswer();
 				}
 			}
-			r.setAnswers(new String[]{han, hong, choi, you});
-			
-			if(han.equals("") || hong.equals("") || choi.equals("") || you.equals(""))
-				r.setMatched("");
-			else if(han.equals(hong) && hong.equals(choi) && choi.equals(you))
+			r.setAnswers(new String[] { han, hong, choi, you });
+
+			if (han.equals("") || hong.equals("") || choi.equals("") || you.equals(""))
+				r.setMatched("X");
+			else if (han.equals(hong) && hong.equals(choi) && choi.equals(you))
 				r.setMatched("O");
 			else
 				r.setMatched("X");
@@ -112,11 +117,12 @@ public class answerController {
 		return list;
 	}
 
-	@RequestMapping(value= "/userpage", method = RequestMethod.GET)
+	@RequestMapping(value = "/userpage", method = RequestMethod.GET)
 	public String listOfName() {
 		return "userpage";
 	}
-	@RequestMapping(value = "/userpage", method = RequestMethod.POST )
+
+	@RequestMapping(value = "/userpage", method = RequestMethod.POST)
 	public String listOfName(HashMap<String, String> map, Model model, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
@@ -131,7 +137,7 @@ public class answerController {
 			List<answerDto> result = ser.selectUserAnswers(map);
 			System.out.println(result.size());
 			model.addAttribute("answerList", result);
-			model.addAttribute("name" , map.get("name"));
+			model.addAttribute("name", map.get("name"));
 			return "userpage";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,39 +145,40 @@ public class answerController {
 			return "error";
 		}
 	}
-	@RequestMapping(value= "/regist", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/regist", method = RequestMethod.GET)
 	public String registerGET() {
 		return "register";
 	}
-	
-	@RequestMapping(value= "/regist", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody String registerPOST(@RequestBody HashMap <String, Object> param) {
+
+	@RequestMapping(value = "/regist", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody String registerPOST(@RequestBody HashMap<String, Object> param) {
 		System.out.println("here");
-		
+
 		JsonObject obj = new JsonObject();
 		try {
-			String name = (String)param.get("name");
-			int startNum = (Integer)param.get("startNum");
-			ArrayList<String> answers = (ArrayList<String>)param.get("answers");
-			
-			for(int i=0; i<40; i++) {
-				ser.register(new answerDto(name, startNum+i, answers.get(i)));
+			String name = (String) param.get("name");
+			int startNum = (Integer) param.get("startNum");
+			ArrayList<String> answers = (ArrayList<String>) param.get("answers");
+
+			for (int i = 0; i < 40; i++) {
+				if (answers.get(i).equals(""))
+					continue;
+				ser.register(new answerDto(name, startNum + i, answers.get(i)));
 			}
 			obj.addProperty("status", "success");
-			obj.addProperty("code" , "200");
-			
-		}catch(Exception e) {
+			obj.addProperty("code", "200");
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			obj.addProperty("status", "실패");
 			obj.addProperty("code", "500");
 		}
-		
+
 		return obj.toString();
-		
-		
+
 	}
-	
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
