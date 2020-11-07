@@ -45,6 +45,8 @@ div#answers{
 			
 		$("#regist").on("click", function(){
 			startNum = Number($("#startNum").val());
+			if(startNum === 0)
+				startNum = 1;
 			console.log($("#name").text());
 			var json = new Object();
 			json.name = $("#name").text();
