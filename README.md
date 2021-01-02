@@ -1,8 +1,12 @@
 # 💯 AnswerChecker 💯 < Toy Project > 
 <hr/>
+
+👏👏 경! 스터디 인원 3명 모두 SAA 취득 완료! 축! 👏👏
+
+<hr/>
 <h2> 왜 만들었을까 ❓</h2>
 
-AWS certificate 취득을 준비하며 정답지가 없는 문제들을 풀며 답을 비교해 봐야했다.<br />
+AWS Solution Architecture Associate 취득을 준비하며 정답지가 없는 문제들을 풀며 답을 비교해 봐야했다.<br />
 마침 Spring 을 배우고 있었고, 실습을 해보고 싶었다.<br />
 네이버 클라우드 플랫폼에 받아둔 크레딧이 아까워 얼른 사용해야했다. <br />
 
